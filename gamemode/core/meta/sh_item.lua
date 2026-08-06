@@ -652,13 +652,15 @@ if (SERVER) then
 						end
 					end
 
-					-- Force database update for transient (noSave) inventories to prevent duplication
-					if (targetInv.noSave) then
+					-- Force database update for noSave inventories OR bot bags to prevent duplication
+					if (targetInv.noSave or isBot) then
 						local query = mysql:Update("ix_items")
-							query:Update("inventory_id", 0)
+							query:Update("inventory_id", targetInv.noSave and 0 or targetInv:GetID())
+
 							-- Only tag for deletion if it is specifically a bot, protecting real players
 							if (isBot) then
 								query:Update("player_id", "BOT_ITEM")
+								self.playerID = "BOT_ITEM"
 							end
 							query:Where("item_id", self.id)
 						query:Execute()

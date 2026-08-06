@@ -195,6 +195,10 @@ hook.Add("PostLoadData", "ixBotCleanup", function()
 		end
 
 		if (#invsToDelete > 0) then
+			local delBagItems = mysql:Delete("ix_items")
+			delBagItems:WhereIn("inventory_id", invsToDelete)
+			delBagItems:Execute()
+
 			local delInvs = mysql:Delete("ix_inventories")
 			delInvs:WhereIn("inventory_id", invsToDelete)
 			delInvs:Execute()

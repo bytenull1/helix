@@ -97,7 +97,7 @@ function ix.item.Instance(index, uniqueID, itemData, x, y, callback, characterID
 					item.data = table.Copy(itemData)
 					item.invID = index
 					item.characterID = characterID
-					item.playerID = playerID
+					item.playerID = dbPlayerID
 
 					if (callback) then
 						callback(item)
