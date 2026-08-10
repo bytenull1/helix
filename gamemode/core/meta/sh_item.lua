@@ -664,8 +664,8 @@ if (SERVER) then
 							end
 							query:Where("item_id", self.id)
 						query:Execute()
-					elseif (curInv and curInv.noSave and IsValid(client) and client:GetCharacter()) then
-						-- Restore proper ownership when taking an item FROM a noSave inv TO a real player
+					elseif (curInv and (curInv.noSave or self.playerID == "BOT_ITEM") and IsValid(client) and client:GetCharacter()) then
+						-- Restore proper ownership when taking an item FROM noSave inv OR bot bag TO real player
 						self.playerID = client:SteamID64()
 						self.characterID = client:GetCharacter():GetID()
 
